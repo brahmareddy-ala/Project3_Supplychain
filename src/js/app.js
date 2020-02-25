@@ -16,7 +16,7 @@ App = {
     distributorID: "0x0000000000000000000000000000000000000000",
     retailerID: "0x0000000000000000000000000000000000000000",
     consumerID: "0x0000000000000000000000000000000000000000",
-
+    
     init: async function () {
         App.readForm();
         /// Setup access to blockchain
@@ -53,6 +53,16 @@ App = {
             App.retailerID, 
             App.consumerID
         );
+    },
+    readItemBufferOne: function (result) {
+        $("#sku").value = result[0];
+        $("#upc").value = result[1];
+        $("#ownerID").value = result[2];
+        $("#originFarmerID").value = result[3];
+        $("#originFarmName").value = result[4];
+        $("#originFarmInformation").value = result[5];
+        $("#originFarmLatitude").value = result[6];
+        $("#originFarmLongitude").value = result[7];
     },
 
     initWeb3: async function () {
@@ -125,6 +135,7 @@ App = {
         event.preventDefault();
 
         App.getMetaskAccountID();
+        App.readForm();
 
         var processId = parseInt($(event.target).data('id'));
         console.log('processId',processId);
@@ -155,7 +166,8 @@ App = {
                 return await App.purchaseItem(event);
                 break;
             case 9:
-                return await App.fetchItemBufferOne(event);
+                const result = await App.fetchItemBufferOne(event);
+                readItemBufferOne(result);
                 break;
             case 10:
                 return await App.fetchItemBufferTwo(event);
@@ -279,7 +291,26 @@ App = {
         App.contracts.SupplyChain.deployed().then(function(instance) {
             return instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
         }).then(function(result) {
-            $("#ftc-item").text(result);
+            $("#ftc-item").text(result);        
+        /*$("#item-details").html(
+                "<br>" + "<br>"
+                + "SKU: " + result[0] + "<br>"
+                + "UPC: " + result[1] + "<br>"
+                + "ownerID: " + result[2] + "<br>"
+                + "originFarmerID: " + result[3] + "<br>"
+                + "originFarmName: " + result[4] + "<br>"
+                + "originFarmInformation: " + result[5] + "<br>"
+                + "originFarmLatitude: " + result[6] + "<br>"
+                + "originFarmLongitude: " + result[7] + "<br>"
+            );*/
+        $("#sku").value = result[0];
+        $("#upc").value = result[1];
+        $("#ownerID").value = result[2];
+        $("#originFarmerID").value = result[3];
+        $("#originFarmName").value = result[4];
+        $("#originFarmInformation").value = result[5];
+        $("#originFarmLatitude").value = result[6];
+        $("#originFarmLongitude").value = result[7];
             console.log('purchaseItem',result);
         }).catch(function(err) {
             console.log(err.message);
