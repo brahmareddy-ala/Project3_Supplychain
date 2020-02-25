@@ -54,17 +54,46 @@ App = {
             App.consumerID
         );
     },
-    readItemBufferOne: function (result) {
-        $("#sku").val(result[0]);// = result[0];
-        $("#upc").value = result[1];
-        $("#ownerID").value = result[2];
-        $("#originFarmerID").value = result[3];
-        $("#originFarmName").value = result[4];
-        $("#originFarmInformation").value = result[5];
-        $("#originFarmLatitude").value = result[6];
-        $("#originFarmLongitude").value = result[7];
+    displayItemBufferOne: function (result) {
+        $("#sku").val(result[0]);
+        $("#upc").val(result[1]);
+        $("#ownerID").val(result[2]);
+        $("#originFarmerID").val(result[3]);
+        $("#originFarmName").val(result[4]);
+        $("#originFarmInformation").val(result[5]);
+        $("#originFarmLatitude").val(result[6]);
+        $("#originFarmLongitude").val(result[7]);
+        /*$("#item-details").html(
+            + "SKU: " + result[0] + "<br>"
+            + "UPC: " + result[1] + "<br>"
+            + "ownerID: " + result[2] + "<br>"
+            + "originFarmerID: " + result[3] + "<br>"
+            + "originFarmName: " + result[4] + "<br>"
+            + "originFarmInformation: " + result[5] + "<br>"
+            + "originFarmLatitude: " + result[6] + "<br>"
+            + "originFarmLongitude: " + result[7] + "<br>"
+        );*/
     },
-
+    displayItemBufferTwo: function (result) {
+        $("#sku").val(result[0]);
+        $("#upc").val(result[1]);
+        $("#ownerID").val(result[2]);
+        $("#originFarmerID").val(result[3]);
+        $("#originFarmName").val(result[4]);
+        $("#originFarmInformation").val(result[5]);
+        $("#originFarmLatitude").val(result[6]);
+        $("#originFarmLongitude").val(result[7]);
+        /*$("#item-details").html(
+            + "SKU: " + result[0] + "<br>"
+            + "UPC: " + result[1] + "<br>"
+            + "ownerID: " + result[2] + "<br>"
+            + "originFarmerID: " + result[3] + "<br>"
+            + "originFarmName: " + result[4] + "<br>"
+            + "originFarmInformation: " + result[5] + "<br>"
+            + "originFarmLatitude: " + result[6] + "<br>"
+            + "originFarmLongitude: " + result[7] + "<br>"
+        );*/
+    },
     initWeb3: async function () {
         /// Find or Inject Web3 Provider
         /// Modern dapp browsers...
@@ -167,7 +196,7 @@ App = {
                 break;
             case 9:
                 const result = await App.fetchItemBufferOne(event);
-                App.readItemBufferOne(result);
+                App.displayItemBufferOne(result);
                 break;
             case 10:
                 return await App.fetchItemBufferTwo(event);
@@ -292,25 +321,6 @@ App = {
             return instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
         }).then(function(result) {
             $("#ftc-item").text(result);        
-        /*$("#item-details").html(
-                "<br>" + "<br>"
-                + "SKU: " + result[0] + "<br>"
-                + "UPC: " + result[1] + "<br>"
-                + "ownerID: " + result[2] + "<br>"
-                + "originFarmerID: " + result[3] + "<br>"
-                + "originFarmName: " + result[4] + "<br>"
-                + "originFarmInformation: " + result[5] + "<br>"
-                + "originFarmLatitude: " + result[6] + "<br>"
-                + "originFarmLongitude: " + result[7] + "<br>"
-            );*/
-        $("#sku").val(result[0]);
-        $("#upc").value = result[1];
-        $("#ownerID").val(result[2]);
-        $("#originFarmerID").val(result[3]);
-        $("#originFarmName").value = result[4];
-        $("#originFarmInformation").value = result[5];
-        $("#originFarmLatitude").value = result[6];
-        $("#originFarmLongitude").value = result[7];
             console.log('purchaseItem',result);
         }).catch(function(err) {
             console.log(err.message);
@@ -327,7 +337,7 @@ App = {
           return instance.fetchItemBufferOne(App.upc);
         }).then(function(result) {
           $("#ftc-item").text(result);
-          console.log('fetchItemBufferOne', result);
+           console.log('fetchItemBufferOne', result);
         }).catch(function(err) {
           console.log(err.message);
         });
