@@ -55,6 +55,8 @@ App = {
         );
     },
     displayItemBufferOne: function (result) {
+        $("#ftc-item").text(result);
+        console.log('fetchItemBufferOne', result);
         $("#sku").val(result[0]);
         $("#upc").val(result[1]);
         $("#ownerID").val(result[2]);
@@ -63,8 +65,8 @@ App = {
         $("#originFarmInformation").val(result[5]);
         $("#originFarmLatitude").val(result[6]);
         $("#originFarmLongitude").val(result[7]);
-        /*$("#item-details").html(
-            + "SKU: " + result[0] + "<br>"
+        $("#item-details").html(
+            "SKU: " + result[0] + "<br>"
             + "UPC: " + result[1] + "<br>"
             + "ownerID: " + result[2] + "<br>"
             + "originFarmerID: " + result[3] + "<br>"
@@ -72,27 +74,27 @@ App = {
             + "originFarmInformation: " + result[5] + "<br>"
             + "originFarmLatitude: " + result[6] + "<br>"
             + "originFarmLongitude: " + result[7] + "<br>"
-        );*/
+        );
     },
     displayItemBufferTwo: function (result) {
+        $("#ftc-item").text(result);
+        console.log('fetchItemBufferTwo', result);
         $("#sku").val(result[0]);
         $("#upc").val(result[1]);
-        $("#ownerID").val(result[2]);
-        $("#originFarmerID").val(result[3]);
-        $("#originFarmName").val(result[4]);
-        $("#originFarmInformation").val(result[5]);
-        $("#originFarmLatitude").val(result[6]);
-        $("#originFarmLongitude").val(result[7]);
-        /*$("#item-details").html(
-            + "SKU: " + result[0] + "<br>"
+        $("#productNotes").val(result[3]);
+        $("#productPrice").val(result[4]);
+        $("#distributorID").val(result[6]);
+        $("#retailerID").val(result[7]);
+        $("#consumerID").val(result[8]);
+        $("#item-details").html(
+            "SKU: " + result[0] + "<br>"
             + "UPC: " + result[1] + "<br>"
-            + "ownerID: " + result[2] + "<br>"
-            + "originFarmerID: " + result[3] + "<br>"
-            + "originFarmName: " + result[4] + "<br>"
-            + "originFarmInformation: " + result[5] + "<br>"
-            + "originFarmLatitude: " + result[6] + "<br>"
-            + "originFarmLongitude: " + result[7] + "<br>"
-        );*/
+            + "productNotes: " + result[3] + "<br>"
+            + "productPrice: " + result[4] + "<br>"
+            + "distributorID: " + result[6] + "<br>"
+            + "retailerID: " + result[7] + "<br>"
+            + "consumerID: " + result[8]
+        );
     },
     initWeb3: async function () {
         /// Find or Inject Web3 Provider
@@ -195,11 +197,12 @@ App = {
                 return await App.purchaseItem(event);
                 break;
             case 9:
-                const result = await App.fetchItemBufferOne(event);
-                App.displayItemBufferOne(result);
+                const resultBufferOne = await App.fetchItemBufferOne(event);
+                App.displayItemBufferOne(resultBufferOne);
                 break;
             case 10:
-                return await App.fetchItemBufferTwo(event);
+                const resultBufferTwo = await App.fetchItemBufferTwo(event);
+                App.displayItemBufferTwo(resultBufferTwo);
                 break;
             }
     },
@@ -298,7 +301,7 @@ App = {
             console.log(err.message);
         });
     },
-
+    
     receiveItem: function (event) {
         event.preventDefault();
         var processId = parseInt($(event.target).data('id'));
@@ -327,9 +330,15 @@ App = {
         });
     },
 
-    fetchItemBufferOne: function () {
-    ///   event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
+    fetchItemBufferOne: async function () {
+        App.upc = $('#upc').val();
+        console.log('upc',App.upc);
+    
+        let instance = await App.contracts.SupplyChain.deployed();
+        let result = await instance.fetchItemBufferOne(App.upc);
+        return result;
+    },
+    /*fetchItemBufferOne: function () {
         App.upc = $('#upc').val();
         console.log('upc',App.upc);
 
@@ -341,12 +350,17 @@ App = {
         }).catch(function(err) {
           console.log(err.message);
         });
-    },
+    },*/
 
-    fetchItemBufferTwo: function () {
-    ///    event.preventDefault();
-    ///    var processId = parseInt($(event.target).data('id'));
-                        
+    fetchItemBufferTwo: async function () {
+        App.upc = $('#upc').val();
+        console.log('upc',App.upc);
+    
+        let instance = await App.contracts.SupplyChain.deployed();
+        let result = await instance.fetchItemBufferTwo(App.upc);
+        return result;
+    },
+    /*fetchItemBufferTwo: function () {                        
         App.contracts.SupplyChain.deployed().then(function(instance) {
           return instance.fetchItemBufferTwo.call(App.upc);
         }).then(function(result) {
@@ -355,7 +369,7 @@ App = {
         }).catch(function(err) {
           console.log(err.message);
         });
-    },
+    },*/
 
     fetchEvents: function () {
         if (typeof App.contracts.SupplyChain.currentProvider.sendAsync !== "function") {
