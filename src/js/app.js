@@ -55,7 +55,7 @@ App = {
         );
     },
     readItemBufferOne: function (result) {
-        $("#sku").value = result[0];
+        $("#sku").val(result[0]);// = result[0];
         $("#upc").value = result[1];
         $("#ownerID").value = result[2];
         $("#originFarmerID").value = result[3];
@@ -167,7 +167,7 @@ App = {
                 break;
             case 9:
                 const result = await App.fetchItemBufferOne(event);
-                readItemBufferOne(result);
+                App.readItemBufferOne(result);
                 break;
             case 10:
                 return await App.fetchItemBufferTwo(event);
@@ -303,10 +303,10 @@ App = {
                 + "originFarmLatitude: " + result[6] + "<br>"
                 + "originFarmLongitude: " + result[7] + "<br>"
             );*/
-        $("#sku").value = result[0];
+        $("#sku").val(result[0]);
         $("#upc").value = result[1];
-        $("#ownerID").value = result[2];
-        $("#originFarmerID").value = result[3];
+        $("#ownerID").val(result[2]);
+        $("#originFarmerID").val(result[3]);
         $("#originFarmName").value = result[4];
         $("#originFarmInformation").value = result[5];
         $("#originFarmLatitude").value = result[6];
