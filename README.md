@@ -1,5 +1,6 @@
 # Ethereum Dapp for Tracking Items through Supply Chain
-# This is the version 1 implementation. Version 2 will provide DApp to allow the initial producer in the supply chain to upload an image of the product along with the UPC hash and store this image in IPFS using Infura.
+
+Note: This is the version 1 of supplychain. Version 2 will be providind addditional functionality that, this DApp will allow the initial producer in the supply chain to upload an image of the product along with the UPC hash and store this image in IPFS using Infura.
 
 Truffle --> 5.1.13 (core: 5.1.13),
 Solidity --> 0.5.16 (solc-js),
