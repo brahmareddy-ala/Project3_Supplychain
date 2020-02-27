@@ -86,7 +86,7 @@ contract SupplyChain is Ownable, FarmerRole, DistributorRole, ConsumerRole, Reta
     _;
     uint _price = items[_upc].productPrice;
     uint amountToReturn = msg.value - _price;
-    msg.sender.transfer(amountToReturn);
+    items[_upc].consumerID.transfer(amountToReturn);
   }
 
   // Define a modifier that checks if an item.state of a upc is Harvested
